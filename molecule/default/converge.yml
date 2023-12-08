@@ -1,7 +1,0 @@
----
-- name: Converge
-  hosts: all
-  tasks:
-    - name: "Include umn_ansible.docker_role"
-      include_role:
-        name: "umn_ansible.docker_role"
