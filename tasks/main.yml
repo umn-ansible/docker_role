@@ -1,2 +1,24 @@
 ---
-# tasks file for umn_sample_role
+- name: Add Docker repository
+  become: yes
+  yum_repository:
+    name: docker
+    description: Docker CE repository
+    baseurl:  https://download.docker.com/linux/centos/9/x86_64/stable/
+
+- name: install docker packages
+  become: yes
+  yum:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+    state: present
+
+- name: start docker
+  become: yes
+  systemd:
+    state: started
+    name: docker
