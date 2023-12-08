@@ -1,10 +1,15 @@
 ---
+- name: Import Docker repository key
+  become: yes
+  rpm_key:
+    state: present
+    key: https://download.docker.com/linux/centos/gpg
+
 - name: Add Docker repository
   become: yes
-  yum_repository:
-    name: docker
-    description: Docker CE repository
-    baseurl:  https://download.docker.com/linux/centos/9/x86_64/stable/
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docer-ce.repo
 
 - name: install docker packages
   become: yes
@@ -15,10 +20,11 @@
       - containerd.io
       - docker-buildx-plugin
       - docker-compose-plugin
-    state: present
+    state: latest
 
 - name: start docker
   become: yes
   systemd:
     state: started
     name: docker
+    enabled: yes
