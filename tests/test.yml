@@ -2,4 +2,4 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - umn_sample_role
+    - docker_role
